@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khreor Fashion | Premium Luxury Curated Store</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PayPal SDK pointing directly to your updated stoneyycuber@gmail.com endpoint -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&merchant-id=stoneyycuber@gmail.com&currency=ZAR"></script>
+
+    <style>
+        :root {
+            --bg-main: #060d1f;
+            --bg-gradient: linear-gradient(135deg, #060d1f 0%, #0d1b3e 100%);
+            --bg-surface: #132247;
+            --accent-glow: #00e5ff;
+            --brand-gold: #c6ac63;
+            --text-primary: #ffffff;
+            --text-secondary: #a5b4fc;
+            --glass-bg: rgba(19, 34, 71, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --whatsapp-green: #25d366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex-grow: 1;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            font-size: 1.5rem;
+            color: var(--brand-gold);
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .menu-btn:hover {
+            color: var(--accent-glow);
+        }
+
+        .search-container {
+            position: relative;
+            width: 280px;
+        }
+
+        .search-container input {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            padding: 12px 18px 12px 42px;
+            border-radius: 30px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .logo-box {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-logo-img {
+            max-height: 65px;
+            width: auto;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-trigger {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--brand-gold);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* HERO SLIDESHOW MODULE */
+        .hero-showcase {
+            width: 100%;
+            height: 520px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .slide-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 1;
+        }
+
+        .slide-container.active-slide {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top; /* Keeps faces and main framing visible */
+            background-color: #0d1b3e;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(6,13,31,0.85) 30%, rgba(6,13,31,0.2) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 60px;
+            gap: 16px;
+        }
+
+        .hero-overlay h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            line-height: 1.2;
+            max-width: 550px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .hero-overlay h1 span {
+            color: var(--brand-gold);
+        }
+
+        .hero-overlay p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 450px;
+            line-height: 1.6;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* NAVIGATION DRAWER */
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100%;
+            background: #091326;
+            box-shadow: 10px 0 40px rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: left 0.3s ease;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-drawer.active {
+            left: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 16px;
+        }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .drawer-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .drawer-menu li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: color 0.2s;
+        }
+
+        .drawer-menu li a:hover, .drawer-menu li a.active {
+            color: var(--accent-glow);
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+        }
+
+        .drawer-overlay.active {
+            display: block;
+        }
+
+        /* DEPARTMENT SECTIONS */
+        .departments-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .department-card {
+            position: relative;
+            border-radius: 20px;
+            height: 280px; /* Tall box for clear visual display */
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .department-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-glow);
+            box-shadow: 0 15px 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .department-card.selected-active {
+            border-color: var(--brand-gold);
+            box-shadow: 0 0 25px rgba(198, 172, 99, 0.4);
+        }
+
+        .dept-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center top;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .department-card:hover .dept-bg {
+            transform: scale(1.06);
+        }
+
+        .dept-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Sophisticated dynamic shading keeps image 100% sharp while framing elements */
+            background: linear-gradient(to top, rgba(6,13,31,0.85) 0%, rgba(6,13,31,0.1) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .dept-overlay h2 {
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .dept-btn {
+            background: var(--brand-gold);
+            color: #000;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 8px 22px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+        }
+
+        .department-card:hover .dept-btn {
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* LABELS */
+        .section-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .section-title-bar h3 {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--brand-gold);
+        }
+
+        /* PRODUCT TILES */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+            display: none; 
+        }
+
+        .product-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.4);
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            height: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .product-dept-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent-glow);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .explore-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .product-card:hover .explore-btn {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: var(--accent-glow);
+            color: var(--accent-glow);
+        }
+
+        /* SYSTEM MODALS */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 8, 20, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: #0b1429;
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(255,255,255,0.05);
+            border: none; color: white;
+            width: 34px; height: 34px; border-radius: 50%;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+        }
+
+        .modal-img-holder {
+            width: 100%; height: 300px;
+            background: white; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .modal-img-holder img { max-width: 90%; max-height: 90%; object-fit: contain; }
+
+        .size-chips { display: flex; gap: 8px; margin-top: 6px; }
+        .size-chip {
+            border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.2); padding: 6px 14px;
+            border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+        }
+        .size-chip.selected {
+            border-color: var(--accent-glow); background: rgba(0,229,255,0.1); color: var(--accent-glow);
+        }
+
+        .qty-box {
+            display: flex; align-items: center; gap: 4px;
+            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+            width: fit-content; border-radius: 6px; overflow: hidden; margin-top: 6px;
+        }
+        .qty-btn { background: none; border: none; color: white; width: 36px; height: 36px; cursor: pointer; }
+        #modal-qty-val { width: 40px; text-align: center; font-weight: 600; }
+
+        .add-bag-btn {
+            background: var(--brand-gold); color: black; border: none;
+            padding: 14px; border-radius: 10px; font-weight: 700;
+            width: 100%; cursor: pointer; margin-top: 10px;
+        }
+
+        /* CHECKOUT FORM MODULE */
+        .checkout-form {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+            border-top: 1px solid var(--glass-border); padding-top: 16px; margin-top: 10px;
+        }
+        .form-full { grid-column: span 2; }
+        .checkout-form input {
+            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+            padding: 12px; border-radius: 8px; color: white; outline: none;
+        }
+        .checkout-form input:focus { border-color: var(--accent-glow); }
+
+        .payment-gateways-container {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .whatsapp-pay-btn {
+            background: var(--whatsapp-green);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-pay-btn:hover {
+            background-color: #20ba5a;
+            transform: translateY(-2px);
+        }
+
+        .payment-divider {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 4px 0;
+            position: relative;
+        }
+
+        /* GOOGLE MAP WRAPPER */
+        .map-box {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            margin-top: 16px;
+        }
+
+        /* FOOTER INFO DESIGN */
+        footer {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--glass-border);
+            padding: 32px;
+            margin-top: auto;
+        }
+
+        .footer-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer-left h4 {
+            color: var(--brand-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .footer-left p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* VIEWPORT BREAKPOINTS */
+        @media (max-width: 900px) {
+            .departments-container { grid-template-columns: 1fr; gap: 16px; }
+            .department-card { height: 220px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-layout { grid-template-columns: 1fr; gap: 20px; }
+            .modal-grid { grid-template-columns: 1fr; }
+            .logo-box { display: none; }
+            .hero-overlay { padding: 0 32px; }
+            .hero-overlay h1 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .product-grid { grid-template-columns: 1fr; }
+            .search-container { width: 150px; }
+            .checkout-form { grid-template-columns: 1fr; }
+            .form-full { grid-column: span 1; }
+            .hero-showcase { height: 350px; }
+            .hero-overlay h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MOBILE NAVIGATION DRAW OUT COVER -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <h3 style="color:var(--brand-gold)">Navigation</h3>
+            <button class="drawer-close" id="closeDrawerBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="drawer-menu">
+            <li><a href="#" class="dept-linker" data-dept="men"><i class="fa-solid fa-mars"></i> Men's Collection</a></li>
+            <li><a href="#" class="dept-linker" data-dept="ladies"><i class="fa-solid fa-venus"></i> Ladies Wear</a></li>
+            <li><a href="#" class="dept-linker" data-dept="kids"><i class="fa-solid fa-child"></i> Kids Catalog</a></li>
+        </ul>
+    </nav>
+
+    <div class="app-container">
+        
+        <!-- MAIN NAVIGATION HEADER BAR -->
+        <header>
+            <div class="header-left">
+                <button class="menu-btn" id="openDrawerBtn"><i class="fa-solid fa-bars-staggered"></i></button>
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="liveSearchInput" placeholder="Search product line...">
+                </div>
+            </div>
+
+            <div class="logo-box">
+                <img src="logo.png" alt="Khreor Fashion" class="brand-logo-img">
+            </div>
+
+            <div class="header-right">
+                <button class="cart-trigger" id="cartOpenTrigger">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count" id="cartBadgeCount">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- AUTOMATED SLIDESHOW HERO BANNER (ROTATES EVERY 5 SECONDS) -->
+        <section class="hero-showcase" id="heroSlideshowContainer">
+            
+            <!-- Slide 1 -->
+            <div class="slide-container active-slide">
+                <img src="https://www.wearview.co/_next/image?url=%2Fassets%2Fservices%2Fmodel-creation.webp&w=3840&q=75" alt="Men Lookbook Showcase" class="hero-image">
+                <div class="hero-overlay">
+                    <h1>Elevate Your <span>Signature</span> Style</h1>
+                    <p>Explore high-tier structural cuts, lightweight performance composites, and premium street drops curated for modern luxury profiles.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide-container">
+                <img src="https://cdn.shopify.com/s/files/1/0621/2609/6432/files/3_14_1.jpg?v=1764056010" alt="Ladies Formal Lookbook" class="hero-image">
+                <div class="hero-overlay">
+                    <h1>Defined <span>Elegance</span> Outlines</h1>
+                    <p>Experience precise formal contour geometry, flowing high-luxury textiles, and premium couture lines made for statement entrances.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide-container">
+                <img src="https://snurkamsterdam.com/cdn/shop/collections/DreamBig_Kids_Rocket_2354_TshirtShort_ae27e8cd-4dbe-4ebd-a143-b5cbdcdc035c.jpg?v=1762945611&width=1024" alt="Seasonal Luxury Drops" class="hero-image">
+                <div class="hero-overlay">
+                    <h1>Premium <span>Avant</span> Catalog</h1>
+                    <p>Discover minimal seasonal look drops, heavy-gauge fabrics, and elite construction built to define contemporary dress codes.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- THE SPECIALS CATALOG LABEL HEADER -->
+        <div class="section-title-bar">
+            <h3 id="currentCatalogTitle">Seasonal Specials</h3>
+            <span style="font-size:0.85rem; color:var(--text-secondary);" id="itemCounterSpan">Select a department below to view items</span>
+        </div>
+
+        <!-- THE 3 INTERACTIVE DEPARTMENT BLOCKS -->
+        <section class="departments-container">
+            <div class="department-card" id="card-men" onclick="filterByDepartment('men')">
+                <div class="dept-bg" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrPuPBvWG2Lt74nK8Hoq1diA2zDMsUb2ERcuL9HckXgkPVKx8o4RMRS_-V&s=10');"></div>
+                <div class="dept-overlay">
+                    <h2>Men's Wear</h2>
+                    <div class="dept-btn">View Products</div>
+                </div>
+            </div>
+
+            <div class="department-card" id="card-ladies" onclick="filterByDepartment('ladies')">
+                <div class="dept-bg" style="background-image: url('https://www.lovu.co.za/wp-content/uploads/2024/04/ChatGPT-Image-May-16-2026-09_16_32-AM.jpg');"></div>
+                <div class="dept-overlay">
+                    <h2>Ladies Wear</h2>
+                    <div class="dept-btn">View Products</div>
+                </div>
+            </div>
+
+            <div class="department-card" id="card-kids" onclick="filterByDepartment('kids')">
+                <div class="dept-bg" style="background-image: url('https://i.pinimg.com/736x/b5/2e/96/b52e9653cc7533faa892f985d1a0f059.jpg');"></div>
+                <div class="dept-overlay">
+                    <h2>Kids Wear</h2>
+                    <div class="dept-btn">View Products</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCT OUTPUT MATRIX ROW -->
+        <main class="product-grid" id="productGridDisplay">
+            <!-- Populated smoothly on user action choice -->
+        </main>
+
+        <!-- DETAIL SPECS MODAL EXPANSION HOUSING -->
+        <div class="modal" id="detailsModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
+                <div class="modal-grid" id="detailsModalBody">
+                    <!-- Dynamic details data injection -->
+                </div>
+            </div>
+        </div>
+
+        <!-- BAGGED CART MODAL ENGINE -->
+        <div class="modal" id="cartSummaryModal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
+                
+                <div style="text-align:center; margin-bottom:10px; border-bottom:1px solid var(--glass-border); padding-bottom:14px;">
+                    <img src="logo.png" alt="Khreor Fashion" style="max-height:60px; margin:0 auto; display:block; background:transparent;">
+                </div>
+
+                <h3>Your Shopping Bag</h3>
+                <div id="cartItemsContainer" style="display:flex; flex-direction:column; gap:12px; padding:10px 0;"></div>
+                
+                <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.2rem; margin:10px 0;">
+                    <span>Subtotal Total:</span>
+                    <span id="cartGrandTotalText">R 0.00</span>
+                </div>
+
+                <!-- ADDRESS AND CHECKOUT PORTAL PROCESSING -->
+                <h3 style="margin-top:10px;">Secure Delivery Information</h3>
+                <form class="checkout-form" id="shippingForm" onsubmit="event.preventDefault();">
+                    <input type="text" id="custName" placeholder="Full Name" required>
+                    <input type="tel" id="custCell" placeholder="Cell Number" required>
+                    <input type="email" id="custEmail" class="form-full" placeholder="Email Address" required>
+                    <input type="text" id="custAddress" class="form-full" placeholder="Street Address" required>
+                    <input type="text" id="custSuburb" placeholder="Suburb" required>
+                    <input type="text" id="custTown" placeholder="Town / City" required>
+                    <input type="text" id="custZip" placeholder="Zip Code" required>
+                    
+                    <!-- GATEWAYS ROUTING HOOKS -->
+                    <div class="payment-gateways-container">
+                        
+                        <!-- WHATSAPP LINK OUT CHANNEL -->
+                        <button type="button" class="whatsapp-pay-btn" onclick="executeWhatsAppCheckout()">
+                            <i class="fa-brands fa-whatsapp"></i> Pay & Order via WhatsApp
+                        </button>
+
+                        <div class="payment-divider"><span>or pay securely via bank card</span></div>
+
+                        <!-- PAYPAL POPUP COMPONENT ROUTED TO STONEYYCUBER@GMAIL.COM -->
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- COMPANY INFORMATION & LOCATION MAP FOOTER CONTAINER -->
+        <footer>
+            <div class="footer-layout">
+                <div class="footer-left">
+                    <h4>Company Information</h4>
+                    <p style="margin-bottom: 12px;"><strong>Khreor fashion Inc.</strong></p>
+                    <p>Curated luxury clothing drops built for street apparel durability and minimalist profiles. Orders processed securely under verified merchant protection lines.</p>
+                    <p style="margin-top: 14px;"><i class="fa-solid fa-envelope" style="color:var(--accent-glow)"></i> amisementhearity@gmail.com</p>
+                </div>
+                <div class="footer-right-map" style="width:100%">
+                    <h4>Showroom Location</h4>
+                    <div class="map-box">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.734610191834!2d30.969315576274474!3d-25.48056467752601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ee84a3c10cf8e81%3A0x6b77242e88a3cf0a!2sMbombela!5e0!3m2!1sen!2sza!4v1719812345678!5m2!1sen!2sza" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- SCRIPT ENGINE PROCESSING LOGIC -->
+    <script>
+        // Data catalog matching inventory stock levels
+        const productsCatalog = [
+            { id: 1, dept: 'men', title: 'Blue Sweater', price: 449.99, img: 'j1.png', desc: 'Heavyweight insulated matrix layout built to withstand sub-zero wind chills.' },
+            { id: 2, dept: 'men', title: 'Luxury Jearsey', price: 1899.00, img: 'j2.png', desc: 'Premium tailored formal lines emphasizing silhouette structures.' },
+            { id: 3, dept: 'ladies', title: 'Stunning Floral Dress', price: 1550.00, img: '27628.jpg', desc: 'Lightweight fluid micro-weave composition for evening look drops.' },
+            { id: 4, dept: 'ladies', title: 'Midnight Royal Mesh Dress', price: 1750.00, img: '27638.jpg', desc: 'Exclusive high-end weave sequence detailing throughout contours.' },
+            { id: 5, dept: 'ladies', title: 'Modern Active Top', price: 999.00, img: '27659.jpg', desc: 'Breathable composite compression yarn suited for high-tier performance.' },
+            { id: 6, dept: 'men', title: 'Teal Essentials Shorts', price: 799.00, img: 's1.png', desc: 'Relaxed drop-crotch casual modern tailored premium shorts.' }
+        ];
+
+        let shoppingBag = [];
+        let globalSelectedDept = 'none'; 
+        let currentSearchQuery = '';
+        let modalSelectedSize = 'M';
+        let modalSelectedQty = 1;
+        let activeProductUnderReview = null;
+
+        // Core Components
+        const gridDisplay = document.getElementById('productGridDisplay');
+        const liveSearchInput = document.getElementById('liveSearchInput');
+        const cartBadgeCount = document.getElementById('cartBadgeCount');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+
+        // Automatic Hero Slideshow Controller
+        let currentSlideIndex = 0;
+        const allHeroSlides = document.querySelectorAll('.slide-container');
+        
+        function autoCycleHeroSlideshow() {
+            allHeroSlides[currentSlideIndex].classList.remove('active-slide');
+            currentSlideIndex = (currentSlideIndex + 1) % allHeroSlides.length;
+            allHeroSlides[currentSlideIndex].classList.add('active-slide');
+        }
+        // Run automatic frame slide transition exactly every 5000 milliseconds (5 seconds)
+        setInterval(autoCycleHeroSlideshow, 5000);
+
+        // Sidebar Navigation Toggles
+        document.getElementById('openDrawerBtn').addEventListener('click', () => toggleDrawerNav(true));
+        document.getElementById('closeDrawerBtn').addEventListener('click', () => toggleDrawerNav(false));
+        drawerOverlay.addEventListener('click', () => toggleDrawerNav(false));
+
+        function toggleDrawerNav(open) {
+            if(open) { mobileDrawer.classList.add('active'); drawerOverlay.classList.add('active'); }
+            else { mobileDrawer.classList.remove('active'); drawerOverlay.classList.remove('active'); }
+        }
+
+        // Live Processing Matrix Renderer Engine
+        function populateStoreGrid() {
+            if (globalSelectedDept === 'none') {
+                gridDisplay.style.display = 'none';
+                return;
+            }
+
+            const results = productsCatalog.filter(p => {
+                const departmentMatches = (p.dept === globalSelectedDept);
+                const textMatches = p.title.toLowerCase().includes(currentSearchQuery.toLowerCase()) || 
+                                    p.desc.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                return departmentMatches && textMatches;
+            });
+
+            document.getElementById('itemCounterSpan').innerText = `${results.length} Items Listed`;
+            gridDisplay.style.display = 'grid';
+            
+            gridDisplay.innerHTML = results.map(p => `
+                <article class="product-card" onclick="triggerProductDetailsModal(${p.id})">
+                    <div class="product-image-wrapper">
+                        <img src="${p.img}" alt="${p.title}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-dept-tag">${p.dept}'s wear</span>
+                        <h4 class="product-title">${p.title}</h4>
+                        <p class="product-price">R ${p.price.toFixed(2)}</p>
+                    </div>
+                    <div class="explore-btn">Select Options</div>
+                </article>
+            `).join('');
+
+            if(results.length === 0) {
+                gridDisplay.innerHTML = `<p style="grid-column:span 3; text-align:center; padding:40px; color:var(--text-secondary);">No matching garment found inside this collection section.</p>`;
+            }
+        }
+
+        // Search Input Watchers
+        liveSearchInput.addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value;
+            if (globalSelectedDept === 'none') {
+                globalSelectedDept = 'men'; 
+            }
+            populateStoreGrid();
+        });
+
+        // Department Selection Configuration
+        window.filterByDepartment = function(departmentCode) {
+            globalSelectedDept = departmentCode;
+            document.getElementById('currentCatalogTitle').innerText = `${departmentCode.toUpperCase()}'S WEAR COLLECTION`;
+            
+            document.querySelectorAll('.department-card').forEach(card => card.classList.remove('selected-active'));
+            const activeCard = document.getElementById(`card-${departmentCode}`);
+            if (activeCard) activeCard.classList.add('selected-active');
+
+            document.querySelectorAll('.dept-linker').forEach(link => {
+                if(link.getAttribute('data-dept') === departmentCode) link.classList.add('active');
+                else link.classList.remove('active');
+            });
+
+            populateStoreGrid();
+            gridDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        document.querySelectorAll('.dept-linker').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetDept = el.getAttribute('data-dept');
+                toggleDrawerNav(false);
+                filterByDepartment(targetDept);
+            });
+        });
+
+        // Product Expansion Details Frame Targeter
+        window.triggerProductDetailsModal = function(id) {
+            activeProductUnderReview = productsCatalog.find(p => p.id === id);
+            modalSelectedSize = 'M';
+            modalSelectedQty = 1;
+
+            const modalBody = document.getElementById('detailsModalBody');
+            modalBody.innerHTML = `
+                <div class="modal-img-holder">
+                    <img src="${activeProductUnderReview.img}" alt="${activeProductUnderReview.title}">
+                </div>
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                    <div>
+                        <span class="product-dept-tag">${activeProductUnderReview.dept}'s wear</span>
+                        <h2 style="margin-top:2px;">${activeProductUnderReview.title}</h2>
+                        <h3 style="color:var(--accent-glow); margin-top:4px;">R ${activeProductUnderReview.price.toFixed(2)}</h3>
+                    </div>
+                    <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.5;">${activeProductUnderReview.desc}</p>
+                    
+                    <div>
+                        <label style="font-size:0.8rem; font-weight:700; text-transform:uppercase;">Select Size</label>
+                        <div class="size-chips">
+                            <div class="size-chip" onclick="selectModalSize(this, 'S')">S</div>
+                            <div class="size-chip selected" onclick="selectModalSize(this, 'M')">M</div>
+                            <div class="size-chip" onclick="selectModalSize(this, 'L')">L</div>
+                            <div class="size-chip" onclick="selectModalSize(this, 'XL')">XL</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="font-size:0.8rem; font-weight:700; text-transform:uppercase;">Quantity</label>
+                        <div class="qty-box">
+                            <button class="qty-btn" onclick="modifyQty(-1)"><i class="fa-solid fa-minus"></i></button>
+                            <span id="modal-qty-val">1</span>
+                            <button class="qty-btn" onclick="modifyQty(1)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <button class="add-bag-btn" onclick="commitItemToShoppingBag()">
+                        <i class="fa-solid fa-cart-arrow-down"></i> Add To Bag Summary
+                    </button>
+                </div>
+            `;
+            document.getElementById('detailsModal').classList.add('active');
+        };
+
+        window.selectModalSize = function(element, sizeCode) {
+            document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            modalSelectedSize = sizeCode;
+        };
+
+        window.modifyQty = function(value) {
+            modalSelectedQty = Math.max(1, modalSelectedQty + value);
+            document.getElementById('modal-qty-val').innerText = modalSelectedQty;
+        };
+
+        window.commitItemToShoppingBag = function() {
+            const basketEntry = {
+                product: activeProductUnderReview,
+                size: modalSelectedSize,
+                qty: modalSelectedQty
+            };
+            shoppingBag.push(basketEntry);
+            updateCartCounterUI();
+            document.getElementById('detailsModal').classList.remove('active');
+            renderCartModalSummary();
+        };
+
+        function updateCartCounterUI() {
+            const itemsSum = shoppingBag.reduce((total, current) => total + current.qty, 0);
+            cartBadgeCount.innerText = itemsSum;
+        }
+
+        document.getElementById('cartOpenTrigger').addEventListener('click', () => renderCartModalSummary());
+        
+        window.closeAllModals = function() {
+            document.getElementById('detailsModal').classList.remove('active');
+            document.getElementById('cartSummaryModal').classList.remove('active');
+        };
+
+        function renderCartModalSummary() {
+            const listContainer = document.getElementById('cartItemsContainer');
+            let sumTotal = 0;
+
+            if(shoppingBag.length === 0) {
+                listContainer.innerHTML = `<p style="color:var(--text-secondary); text-align:center; padding:12px 0;">Your shopping bag drawer is currently empty.</p>`;
+            } else {
+                listContainer.innerHTML = shoppingBag.map((entry, index) => {
+                    const rowCost = entry.product.price * entry.qty;
+                    sumTotal += rowCost;
+                    return `
+                        <div class="cart-item-row" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;">
+                            <div>
+                                <p style="font-weight:600;">${entry.product.title} (${entry.size})</p>
+                                <p style="font-size:0.85rem; color:var(--text-secondary);">Qty: ${entry.qty} × R ${entry.product.price.toFixed(2)}</p>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <span style="font-weight:700;">R ${rowCost.toFixed(2)}</span>
+                                <button onclick="removeCartItem(${index})" style="background:none; border:none; color:#ff5252; cursor:pointer;"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('cartGrandTotalText').innerText = `R ${sumTotal.toFixed(2)}`;
+            document.getElementById('cartSummaryModal').classList.add('active');
+        }
+
+        window.removeCartItem = function(index) {
+            shoppingBag.splice(index, 1);
+            updateCartCounterUI();
+            renderCartModalSummary();
+        };
+
+        // WHATSAPP BILL ROUTING MANAGEMENT MODULE
+        window.executeWhatsAppCheckout = function() {
+            const formElement = document.getElementById('shippingForm');
+            if (!formElement.reportValidity()) {
+                alert('Please satisfy all secure deliverable data points completely.');
+                return;
+            }
+            if (shoppingBag.length === 0) {
+                alert('Add items into your summary bag before confirming checkout.');
+                return;
+            }
+
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custCell').value;
+            const email = document.getElementById('custEmail').value;
+            const address = document.getElementById('custAddress').value;
+            const suburb = document.getElementById('custSuburb').value;
+            const city = document.getElementById('custTown').value;
+            const zip = document.getElementById('custZip').value;
+
+            let productLinesText = "";
+            let grandTotalCost = 0;
+
+            shoppingBag.forEach((item, index) => {
+                const itemCost = item.product.price * item.qty;
+                grandTotalCost += itemCost;
+                productLinesText += `${index + 1}. ${item.product.title} [Size: ${item.size}] (Qty: ${item.qty}) -> R ${itemCost.toFixed(2)}\n`;
+            });
+
+            let textTemplate = `*NEW KHREOR FASHION INVOICE ORDER*\n`;
+            textTemplate += `=============================\n\n`;
+            textTemplate += `*CUSTOMER DETAILS:*\n`;
+            textTemplate += `• Name: ${name}\n`;
+            textTemplate += `• Cell Contact: ${phone}\n`;
+            textTemplate += `• Email: ${email}\n\n`;
+            textTemplate += `*DELIVERY ADDRESS:*\n`;
+            textTemplate += `• Street: ${address}\n`;
+            textTemplate += `• Suburb: ${suburb}\n`;
+            textTemplate += `• City/Town: ${city}\n`;
+            textTemplate += `• Zip Code: ${zip}\n\n`;
+            textTemplate += `*ITEMS PURCHASED:*\n${productLinesText}\n`;
+            textTemplate += `*TOTAL BILL AMOUNT:* R ${grandTotalCost.toFixed(2)}\n\n`;
+            textTemplate += `=============================\n`;
+            textTemplate += `Please confirm your bank account information layout details to conclude processing!`;
+
+            const encodedMessage = encodeURIComponent(textTemplate);
+            const targetWhatsAppURL = `https://wa.me/27827948113?text=${encodedMessage}`;
+
+            window.open(targetWhatsAppURL, '_blank');
+        };
+
+        // SECURE PAYPAL GATEWAY HOOKED TO STONEYYCUBER@GMAIL.COM
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                if (!document.getElementById('shippingForm').reportValidity()) {
+                    alert('Please satisfy all secure deliverable data points completely.');
+                    return actions.reject();
+                }
+                if (shoppingBag.length === 0) {
+                    alert('Add items into your summary bag before confirming checkout.');
+                    return actions.reject();
+                }
+
+                let finalBillZAR = shoppingBag.reduce((acc, curr) => acc + (curr.product.price * curr.qty), 0);
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { currency_code: "ZAR", value: finalBillZAR.toFixed(2) },
+                        payee: { email_address: "stoneyycuber@gmail.com" }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    closeAllModals();
+                    shoppingBag = [];
+                    updateCartCounterUI();
+                    alert(`Transaction Complete! Payment entered successfully. Verified under merchant protection line stoneyycuber@gmail.com. Thank you, ${details.payer.name.given_name}!`);
+                });
+            }
+        }).render('#paypal-button-container');
+
+        // Initialize setup operations
+        populateStoreGrid();
+    </script>
+</body>
+</html>
